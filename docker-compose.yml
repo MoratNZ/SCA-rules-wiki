@@ -1,0 +1,65 @@
+# MediaWiki with MySQL
+# Access via "http://localhost:8080"
+#   (or "http://$(docker-machine ip):8080" if using docker-machine)
+services:
+  mediawiki:
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    image: sca-rules-wiki:latest
+    environment:
+      - SITE_NAME=${SITE_NAME}
+      - BASE_URL=${BASE_URL}
+      - WIKI_EMAIL=${WIKI_EMAIL}
+      - DB_URL=database:3306
+      - DB_NAME=mediawiki
+      - DB_USER=mediawiki
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_SECRET_KEY=${DB_SECRET_KEY}
+      - DB_UPGRADE_KEY=${DB_UPGRADE_KEY}
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - images:/var/www/html/images
+      - makepdfbook:/var/www/html/extensions/MakePdfBook
+      
+  database:
+    image: sca-rules-db:latest
+    # image: mysql:8.4.0
+    environment:
+      - DB_NAME=mediawiki
+      - MYSQL_USER=mediawiki
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    restart: always
+
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+    volumes:
+      - db_backups:/docker-entrypoint-initdb.d
+
+volumes:
+  images:
+    driver: local 
+    driver_opts:
+      type: none
+      device: ${CONTEXT_DIRECTORY}/images
+      o: bind
+  db_backups:
+    driver: local 
+    driver_opts:
+      type: none
+      device: ${CONTEXT_DIRECTORY}/db_backups
+      o: bind
+  makepdfbook:
+    driver: local 
+    driver_opts:
+      type: none
+      device:  /Users/morat/scripts/dev/MakePdfBook
+      o: bind
+     

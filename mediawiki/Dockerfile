@@ -1,0 +1,20 @@
+FROM mediawiki:1.41
+
+RUN apt-get update && apt-get --assume-yes install inkscape && apt-get --assume-yes install pandoc
+RUN apt-get --assume-yes install texlive-latex-base 
+RUN apt-get --assume-yes install texlive-latex-extra
+RUN apt-get --assume-yes install texlive-fonts-recommended
+RUN apt-get --assume-yes install texlive-fonts-extra
+RUN apt-get --assume-yes install cron
+RUN apt-get clean
+
+COPY ./bin/startup.sh /
+COPY ./LocalSettings.php /var/www/html
+
+WORKDIR /var/www/html/extensions
+RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git && git clone https://github.com/wikimedia/mediawiki-extensions-NativeSvgHandler.git NativeSvgHandler
+
+WORKDIR /var/www/html
+
+ENTRYPOINT [ "/startup.sh" ]
+CMD ["apache2-foreground"]

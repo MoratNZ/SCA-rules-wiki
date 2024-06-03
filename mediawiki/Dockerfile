@@ -9,7 +9,6 @@ RUN apt-get --assume-yes install cron
 RUN apt-get clean
 
 COPY ./bin/startup.sh /
-COPY ./LocalSettings.php /var/www/html
 
 WORKDIR /var/www/html/extensions
 RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git && git clone https://github.com/wikimedia/mediawiki-extensions-NativeSvgHandler.git NativeSvgHandler

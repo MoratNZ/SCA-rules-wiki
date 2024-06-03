@@ -22,7 +22,14 @@ services:
     ports:
       - 80:80
     volumes:
-      - images:/var/www/html/images
+      - type: bind
+        source: ${CONTEXT_DIRECTORY}/images
+        target: /var/www/html/images
+        read_only: false
+      - type: bind
+        source: ${CONTEXT_DIRECTORY}/LocalSettings.php
+        target: /var/www/html/LocalSettings.php
+        read_only: true
       
   database:
     image: sca-rules-db:latest
@@ -41,20 +48,7 @@ services:
       retries: 10
 
     volumes:
-      - db_backups:/docker-entrypoint-initdb.d
-
-volumes:
-  images:
-    driver: local 
-    driver_opts:
-      type: none
-      device: ${CONTEXT_DIRECTORY}/images
-      o: bind
-  db_backups:
-    driver: local 
-    driver_opts:
-      type: none
-      device: ${CONTEXT_DIRECTORY}/db_backups
-      o: bind
-
-     
+      - type: bind
+        source: ${CONTEXT_DIRECTORY}/db_backups
+        target: /docker-entrypoint-initdb.d
+        read_only: false

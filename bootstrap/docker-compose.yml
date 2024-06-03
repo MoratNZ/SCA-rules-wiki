@@ -1,0 +1,54 @@
+# MediaWiki with MySQL
+# Access via "http://localhost:8080"
+#   (or "http://$(docker-machine ip):8080" if using docker-machine)
+services:
+  mediawiki:
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    image: mediawiki:1.41
+    restart: always
+    ports:
+      - 80:80
+    links:
+      - database
+    volumes:
+      - images:/var/www/html/images
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+  # This key also defines the name of the database host used during setup instead of the default "localhost"
+  database:
+    image: sca-rules-db:latest
+    # image: mysql:8.4.0
+    environment:
+      - DB_NAME=mediawiki
+      - MYSQL_USER=mediawiki
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - BACKUPS_LOCATION=/db_backups
+    restart: always
+
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - db_backups:/db_backups
+
+
+volumes:
+  images:
+    driver: local 
+    driver_opts:
+      type: none
+      device: ${CONTEXT_DIRECTORY}/images
+      o: bind
+  db_backups:
+    driver: local 
+    driver_opts:
+      type: none
+      device: ${CONTEXT_DIRECTORY}/db_backups
+      o: bind

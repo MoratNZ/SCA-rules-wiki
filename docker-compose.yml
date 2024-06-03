@@ -32,6 +32,7 @@ services:
       - MYSQL_USER=mediawiki
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - BACKUPS_LOCATION=/docker-entrypoint-initdb.d/
     restart: always
 
     healthcheck:

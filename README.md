@@ -11,16 +11,21 @@ If you don't already have it
 ### Create mysql container image
 ```docker build -t sca-rules-db:latest database/```
 
-### Create a context directory
+### Create a context directory (optional)
 This is a dir to persist database dumps and image files.
 
-Pick a location, create a directory with ```images/``` and ```db_dump``` subdirectories, and reach out to David to get the content to stick in there.
+There is a basic / example context dir included in this repository. It provides a minimum wiki setup.
 
-In the fullness of time, we won't need an out of band distribution of seed images & db, but I haven't yet created a clean (secret free) base DB dump
+This isn't intended to significant use - just for familiarisation. 
+
+If you're going to be actually running this, copy context/ to a location outside the repository. 
+
+Advanced note: it's also possible to bootstrap the DB content from scratch. Details of this to come
 
 ### Create a .env file
 ```cp example.env .env```
-Edit ```.env``` in your favourite editor, and replace the ```{placeholders}``` wit appropriate values.
+Edit ```.env``` in your favourite editor, and make any tweaks to it that you prefer. 
+Note: passwords need to be aligned between the .env file and the database; at the moment this alignment will need to be done manually if you change them in the .env fiel.
 
 ### Start containers
 ``` docker compose up ```
@@ -28,5 +33,13 @@ Edit ```.env``` in your favourite editor, and replace the ```{placeholders}``` w
 ### Access the wiki
 Go to ```http://localhost``` from your preferred web browser
 
+Log in; the default user name is ```Admin```, password ```Admin``` (you'll get prompted to change this to a password that sucks less on first login)
+
 ## Contributing
 Um, like, ping me, I guess
+
+
+## Bootstrapping an install from scratch
+- run docker-compose from bootstrap directory
+- load mediawiki, jump through setup hoops
+- run ```scripts/backup.sh```

@@ -15,7 +15,8 @@ COPY ./bin/startup.sh /scripts/
 RUN chmod 744 /scripts/startup.sh
 COPY /bin/crontab /etc/crontab
 RUN chmod 600 /etc/crontab
-
+COPY ./bin/bootstrap.sh /docker-entrypoint-initdb.d/
+RUN chmod 744 /docker-entrypoint-initdb.d/bootstrap.sh
 # This stanza is a hack to allow us to call the elaborate mysqld entrypoint
 # script from another script. 
 # I hope there is a better way.
@@ -23,5 +24,7 @@ RUN cp /entrypoint.sh /entrypoint.sh.bak
 RUN head -n -3 /entrypoint.sh.bak > /entrypoint.sh
 RUN echo '_main mysqld' >> /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
+# End filthy hack
+
 
 ENTRYPOINT [ "/scripts/startup.sh" ]

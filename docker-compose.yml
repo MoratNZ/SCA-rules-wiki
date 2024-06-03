@@ -23,7 +23,6 @@ services:
       - 80:80
     volumes:
       - images:/var/www/html/images
-      - makepdfbook:/var/www/html/extensions/MakePdfBook
       
   database:
     image: sca-rules-db:latest
@@ -56,10 +55,5 @@ volumes:
       type: none
       device: ${CONTEXT_DIRECTORY}/db_backups
       o: bind
-  makepdfbook:
-    driver: local 
-    driver_opts:
-      type: none
-      device:  /Users/morat/scripts/dev/MakePdfBook
-      o: bind
+
      

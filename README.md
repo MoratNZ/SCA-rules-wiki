@@ -13,21 +13,17 @@ If you don't already have it
 
 ### Create a context directory (optional)
 This is a dir to persist database dumps and image files.
-
-There is a basic / example context dir included in this repository. It provides a minimum wiki setup.
-
+There is a basic / example context dir included in this repository (```context/```). It provides a minimum wiki setup.
 This isn't intended to significant use - just for familiarisation. 
-
 If you're going to be actually running this, copy context/ to a location outside the repository. 
-
-Advanced note: it's also possible to bootstrap the DB content from scratch. Details of this to come
+**Advanced note:** it's also possible to bootstrap the DB content from scratch. Details of this to come
 
 ### Create a .env file
 ```cp example.env .env```
 Edit ```.env``` in your favourite editor, and make any tweaks to it that you prefer. 
 Note: passwords need to be aligned between the .env file and the database; at the moment this alignment will need to be done manually if you change them in the .env fiel.
 
-### Start containers
+### Start the containers
 ``` docker compose up ```
 
 ### Access the wiki

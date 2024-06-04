@@ -127,7 +127,7 @@ wfLoadSkin( 'Vector' );
 # wfLoadExtensions('ExtensionName');
 wfLoadExtension( 'PdfHandler' );
 wfLoadExtension( 'MakePdfBook' );
-wfLoadExtension( 'NativeSvgHandler' );
+#wfLoadExtension( 'NativeSvgHandler' );
 wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'WikiEditor' );
 wfLoadExtension( 'TemplateData' );
@@ -136,15 +136,15 @@ require_once("$IP/extensions/ExternalRedirect/ExternalRedirect.php");
 $wgExternalRedirectNsIDs = array(1000, 1002, 1004, 1006, 1008, 1010, 1012);
 
 
-#allow uploading of SVGs
+# Allow uploading of SVGs and render them correctly
 $wgFileExtensions[] = 'svg';
 $wgAllowTitlesInSVG = true;
+$wgSVGNativeRendering = true;
 
 #$wgSVGConverter = 'inkscape';
 #$wgSVGConverterPath = '/usr/bin';
 $wgTmpDirectory = '/tmp';
 $wgMaxShellMemory = '1024000';  #required to get the conversion to run
-
 
 # End of automatically generated settings.
 # Add more configuration options below.
@@ -161,99 +161,60 @@ $wgRestrictDisplayTitle = false;
 # Additional namespace definitions
 define("NS_ARCHERY",1000);
 define("NS_ARCHERY_NOTES",1001);
-define("NS_DRAFT_ARCHERY",2000);
-define("NS_DRAFT_ARCHERY_NOTES",2001);
 $wgExtraNamespaces[NS_ARCHERY] = "Archery";
 $wgExtraNamespaces[NS_ARCHERY_NOTES] = "Archery_notes";
-$wgExtraNamespaces[NS_DRAFT_ARCHERY] = "Archery_Draft";
-$wgExtraNamespaces[NS_DRAFT_ARCHERY_NOTES] = "Archery_Draft_notes";
 $wgContentNamespaces[] = NS_ARCHERY;
-$wgContentNamespaces[] = NS_DRAFT_ARCHERY;
 $wgNamespaceProtection[NS_ARCHERY] = array('editArchery');
-$wgNamespaceProtection[NS_DRAFT_ARCHERY] = array('editArchery');
 
-define("NS_FENCING",1002);
-define("NS_FENCING_NOTES",1003);
-define("NS_DRAFT_FENCING",2002);
-define("NS_DRAFT_FENCING_NOTES",2003);
-$wgExtraNamespaces[NS_FENCING] = "Fencing";
-$wgExtraNamespaces[NS_FENCING_NOTES] = "Fencing_notes";
-$wgExtraNamespaces[NS_DRAFT_FENCING] = "Fencing_Draft";
-$wgExtraNamespaces[NS_DRAFT_FENCING_NOTES] = "Fencing_Draft_notes";
-$wgContentNamespaces[] = NS_FENCING;
-$wgContentNamespaces[] = NS_DRAFT_FENCING;
-$wgNamespaceProtection[NS_FENCING] = array('editFencing');
-$wgNamespaceProtection[NS_DRAFT_FENCING] = array('editFencing');
+define("NS_ARMORED_COMBAT",1002);
+define("NS_ARMORED_COMBAT_NOTES",1003);
+$wgExtraNamespaces[NS_ARMORED_COMBAT] = "Armored_Combat";
+$wgExtraNamespaces[NS_ARMORED_COMBAT_NOTES] = "Armored_Combat_notes";
+$wgContentNamespaces[] = NS_ARMORED_COMBAT;
+$wgNamespaceProtection[NS_ARMORED_COMBAT] = array('editArmoredCombat');
 
-define("NS_SIEGE",1004);
-define("NS_SIEGE_NOTES",1005);
-define("NS_DRAFT_SIEGE",2004);
-define("NS_DRAFT_SIEGE_NOTES",2005);
-$wgExtraNamespaces[NS_SIEGE] = "Siege";
-$wgExtraNamespaces[NS_SIEGE_NOTES] = "Siege_notes";
-$wgExtraNamespaces[NS_DRAFT_SIEGE] = "Siege_Draft";
-$wgExtraNamespaces[NS_DRAFT_SIEGE_NOTES] = "Siege_Draft_notes";
-$wgContentNamespaces[] = NS_SIEGE;
-$wgContentNamespaces[] = NS_DRAFT_SIEGE;
-$wgNamespaceProtection[NS_SIEGE] = array('editSiege');
-$wgNamespaceProtection[NS_DRAFT_SIEGE] = array('editSiege');
-
-define("NS_ARMOURED_COMBAT",1006);
-define("NS_ARMOURED_COMBAT_NOTES",1007);
-define("NS_DRAFT_ARMOURED_COMBAT",2006);
-define("NS_DRAFT_ARMOURED_COMBAT_NOTES",2007);
-$wgExtraNamespaces[NS_ARMOURED_COMBAT] = "Armoured_Combat";
-$wgExtraNamespaces[NS_ARMOURED_COMBAT_NOTES] = "Armoured_Combat_notes";
-$wgExtraNamespaces[NS_DRAFT_ARMOURED_COMBAT] = "Armoured_Combat_Draft";
-$wgExtraNamespaces[NS_DRAFT_ARMOURED_COMBAT_NOTES] = "Armoured_Combat_Draft_notes";
-$wgContentNamespaces[] = NS_ARMOURED_COMBAT;
-$wgContentNamespaces[] = NS_DRAFT_ARMOURED_COMBAT;
-$wgNamespaceProtection[NS_ARMOURED_COMBAT] = array('editArmouredCombat');
-$wgNamespaceProtection[NS_DRAFT_ARMOURED_COMBAT] = array('editArmouredCombat');
-
-define("NS_EQUESTRIAN",1008);
-define("NS_EQUESTRIAN_NOTES",1009);
-define("NS_DRAFT_EQUESTRIAN",2008);
-define("NS_DRAFT_EQUESTRIAN_NOTES",2009);
+define("NS_EQUESTRIAN",1004);
+define("NS_EQUESTRIAN_NOTES",1005);
 $wgExtraNamespaces[NS_EQUESTRIAN] = "Equestrian";
 $wgExtraNamespaces[NS_EQUESTRIAN_NOTES] = "Equestrian_notes";
-$wgExtraNamespaces[NS_DRAFT_EQUESTRIAN] = "Equestrian_Draft";
-$wgExtraNamespaces[NS_DRAFT_EQUESTRIAN_NOTES] = "Equestrian_Draft_notes";
 $wgContentNamespaces[] = NS_EQUESTRIAN;
-$wgContentNamespaces[] = NS_DRAFT_EQUESTRIAN;
 $wgNamespaceProtection[NS_EQUESTRIAN] = array('editEquestrian');
-$wgNamespaceProtection[NS_DRAFT_EQUESTRIAN] = array('editEquestrian');
 
-define("NS_YOUTH_ARMOURED_COMBAT",1010);
-define("NS_YOUTH_ARMOURED_COMBAT_NOTES",1011);
-define("NS_DRAFT_YOUTH_ARMOURED_COMBAT",2010);
-define("NS_DRAFT_YOUTH_ARMOURED_COMBAT_NOTES",2011);
-$wgExtraNamespaces[NS_YOUTH_ARMOURED_COMBAT] = "Youth_Armoured_Combat";
-$wgExtraNamespaces[NS_YOUTH_ARMOURED_COMBAT_NOTES] = "Youth_Armoured_Combat_notes";
-$wgExtraNamespaces[NS_DRAFT_YOUTH_ARMOURED_COMBAT] = "Youth_Armoured_Combat_Draft";
-$wgExtraNamespaces[NS_DRAFT_YOUTH_ARMOURED_COMBAT_NOTES] = "Youth_Armoured_Combat_Draft_notes";
-$wgContentNamespaces[] = NS_YOUTH_ARMOURED_COMBAT;
-$wgContentNamespaces[] = NS_DRAFT_YOUTH_ARMOURED_COMBAT;
-$wgNamespaceProtection[NS_YOUTH_ARMOURED_COMBAT] = array('editYouthArmouredCombat');
-$wgNamespaceProtection[NS_DRAFT_YOUTH_ARMOURED_COMBAT] = array('editYouthArmouredCombat');
+define("NS_FENCING",1006);
+define("NS_FENCING_NOTES",1007);
+$wgExtraNamespaces[NS_FENCING] = "Fencing";
+$wgExtraNamespaces[NS_FENCING_NOTES] = "Fencing_notes";
+$wgContentNamespaces[] = NS_FENCING;
+$wgNamespaceProtection[NS_FENCING] = array('editFencing');
 
-define("NS_YOUTH_FENCING",1012);
-define("NS_YOUTH_FENCING_NOTES",1013);
-define("NS_DRAFT_YOUTH_FENCING",2012);
-define("NS_DRAFT_YOUTH_FENCING_NOTES",2013);
-$wgExtraNamespaces[NS_YOUTH_FENCING] = "Youth_Fencing";
-$wgExtraNamespaces[NS_YOUTH_FENCING_NOTES] = "Youth_Fencing_notes";
-$wgExtraNamespaces[NS_DRAFT_YOUTH_FENCING] = "Youth_Fencing_Draft";
-$wgExtraNamespaces[NS_DRAFT_YOUTH_FENCING_NOTES] = "Youth_Fencing_Draft_notes";
-$wgContentNamespaces[] = NS_YOUTH_FENCING;
-$wgContentNamespaces[] = NS_DRAFT_YOUTH_FENCING;
-$wgNamespaceProtection[NS_YOUTH_FENCING] = array('editYouthFencing');
-$wgNamespaceProtection[NS_DRAFT_YOUTH_FENCING] = array('editYouthFencing');
+define("NS_SIEGE",1008);
+define("NS_SIEGE_NOTES",1009);
+$wgExtraNamespaces[NS_SIEGE] = "Siege";
+$wgExtraNamespaces[NS_SIEGE_NOTES] = "Siege_notes";
+$wgContentNamespaces[] = NS_SIEGE;
+$wgNamespaceProtection[NS_SIEGE] = array('editSiege');
+
+define("NS_THROWN_WEAPONS",1010);
+define("NS_THROWN_WEAPONS_NOTES",1011);
+$wgExtraNamespaces[NS_THROWN_WEAPONS] = "Thrown_Weapons";
+$wgExtraNamespaces[NS_THROWN_WEAPONS_NOTES] = "Thrown_Weapons_notes";
+$wgContentNamespaces[] = NS_THROWN_WEAPONS;
+$wgNamespaceProtection[NS_THROWN_WEAPONS] = array('editThrownWeapons');
+
+define("NS_YOUTH_MARTIAL",1012);
+define("NS_YOUTH_MARTIAL_NOTES",1013);
+$wgExtraNamespaces[NS_YOUTH_MARTIAL] = "Youth_Martial";
+$wgExtraNamespaces[NS_YOUTH_MARTIAL_NOTES] = "Youth_Martial_notes";
+$wgContentNamespaces[] = NS_YOUTH_MARTIAL;
+$wgNamespaceProtection[NS_YOUTH_MARTIAL] = array('editYouthMartial');
 
 # User permission settings
+# General users can read, but can't edit
+# They also can't create their own accounts
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
 
+# Logged in users can edit the general namespace
 $wgGroupPermissions['user']['read'] = true;
 $wgGroupPermissions['user']['edit'] = false;
 $wgGroupPermissions['user']['changetags'] = false;
@@ -266,11 +227,12 @@ $wgGroupPermissions['editor']['changetags'] = true;
 $wgGroupPermissions['editor']['applychangetags'] = true;
 $wgGroupPermissions['editor']['applychangetags'] = true;
 
+# Namespaces can be editted by their specific editors
 $wgGroupPermissions['ArcheryEditor']['editArchery'] = true;
-$wgGroupPermissions['FencingEditor']['editFencing'] = true;
-$wgGroupPermissions['FencingEditor']['editYouthFencing'] = true;
-$wgGroupPermissions['SiegeEditor']['editSiege'] = true;
-$wgGroupPermissions['ArmouredCombatEditor']['editArmouredCombat'] = true;
+$wgGroupPermissions['ArmoredCombatEditor']['editArmoredCombat'] = true;
 $wgGroupPermissions['EquestrianEditor']['editEquestrian'] = true;
-$wgGroupPermissions['YouthAmouredCombatEditor']['editYouthArmouredCombat'] = true;
+$wgGroupPermissions['FencingEditor']['editFencing'] = true;
+$wgGroupPermissions['SiegeEditor']['editSiege'] = true;
+$wgGroupPermissions['ThrownWeaponsEditor']['editThrownWeapons'] = true;
+$wgGroupPermissions['YouthMartialEditor']['editYouthMartial'] = true;
 

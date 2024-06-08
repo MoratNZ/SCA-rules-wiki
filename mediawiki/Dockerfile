@@ -1,5 +1,7 @@
 FROM mediawiki:1.41
 
+# we need inkscape for image conversion in MakePdfBook
+# we need pandoc for html > tex > pdf conversion in MakePdfBook
 RUN apt-get update && apt-get --assume-yes install inkscape && apt-get --assume-yes install pandoc
 RUN apt-get --assume-yes install texlive-latex-base 
 RUN apt-get --assume-yes install texlive-latex-extra
@@ -11,7 +13,7 @@ RUN apt-get clean
 COPY ./bin/startup.sh /
 
 WORKDIR /var/www/html/extensions
-RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git && git clone https://github.com/wikimedia/mediawiki-extensions-NativeSvgHandler.git NativeSvgHandler
+RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
 
 WORKDIR /var/www/html
 

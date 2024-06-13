@@ -50,5 +50,5 @@ services:
     volumes:
       - type: bind
         source: ${CONTEXT_DIRECTORY}/db_backups
-        target: /docker-entrypoint-initdb.d
+        target: /db_backups
         read_only: false

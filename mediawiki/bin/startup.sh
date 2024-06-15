@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Running startup script
 
-# php /var/www/html/maintenance/update.php
+cp -r $IMAGE_BACKUPS /var/www/html/images
 
 exec "$@"

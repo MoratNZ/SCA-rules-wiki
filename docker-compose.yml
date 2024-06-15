@@ -18,13 +18,15 @@ services:
       - DB_PASSWORD=${MYSQL_PASSWORD}
       - DB_SECRET_KEY=${DB_SECRET_KEY}
       - DB_UPGRADE_KEY=${DB_UPGRADE_KEY}
+      - BACKUPS_LOCATION=/image_backups
     restart: always
     ports:
       - 80:80
     volumes:
       - type: bind
         source: ${CONTEXT_DIRECTORY}/images
-        target: /var/www/html/images
+        # target: /var/www/html/images
+        target: /image_backups
         read_only: false
       - type: bind
         source: ${CONTEXT_DIRECTORY}/LocalSettings.php
@@ -39,7 +41,7 @@ services:
       - MYSQL_USER=mediawiki
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - BACKUPS_LOCATION=/docker-entrypoint-initdb.d/
+      - BACKUPS_LOCATION=/db_backups
     restart: always
 
     healthcheck:

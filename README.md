@@ -24,7 +24,7 @@ Edit ```.env``` in your favourite editor, and make any tweaks to it that you pre
 Note: passwords need to be aligned between the .env file and the database; at the moment this alignment will need to be done manually if you change them in the .env fiel.
 
 ### Start the containers
-``` docker compose up ```
+```docker compose up```
 
 ### Access the wiki
 Go to ```http://localhost``` from your preferred web browser

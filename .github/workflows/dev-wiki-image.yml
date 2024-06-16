@@ -1,4 +1,4 @@
-name: Create and publish sca-rules-wiki image
+name: Create and publish sca-rules-wiki dev image
 
 on:
   # A manual trigger

@@ -7,7 +7,7 @@ FROM mediawiki:1.41
 # We need pandoc for html > tex > pdf conversion in MakePdfBook
 # For the sake of sanity, keep the list of packages sorted.
 RUN apt-get --quiet update \
-    && DEBIAN_FRONTEND noninteractive \
+    && DEBIAN_FRONTEND=noninteractive \
     apt-get --quiet --assume-yes --no-install-recommends install \
     cron \
     texlive-fonts-extra \

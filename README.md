@@ -21,7 +21,6 @@ If you're going to be actually running this, copy context/ to a location outside
 ### Create a .env file
 ```cp example.env .env```
 Edit ```.env``` in your favourite editor, and make any tweaks to it that you prefer. 
-Note: passwords need to be aligned between the .env file and the database; at the moment this alignment will need to be done manually if you change them in the .env fiel.
 
 ### Start the containers
 ```docker compose up```
@@ -34,8 +33,8 @@ Log in; the default user name is ```Admin```, password ```Admin``` (you'll get p
 ## Contributing
 Um, like, ping me, I guess
 
-
 ## Bootstrapping an install from scratch
+(These are notes to self)
 - run docker-compose from bootstrap directory
 - load mediawiki, jump through setup hoops
 - run ```scripts/backup.sh```

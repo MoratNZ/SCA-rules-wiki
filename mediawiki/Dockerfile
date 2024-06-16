@@ -14,9 +14,8 @@ RUN apt-get -y update && apt-get --assume-yes --no-install-recommends install \
     texlive-fonts-recommended \
     texlive-latex-base \
     texlive-latex-extra \
-    pandoc
-
-RUN apt-get clean
+    pandoc && \
+    apt-get clean ; rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html/extensions
 RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 

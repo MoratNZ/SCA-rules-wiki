@@ -1,6 +1,6 @@
 # MediaWiki with MySQL
-# Access via "http://localhost:8080"
-#   (or "http://$(docker-machine ip):8080" if using docker-machine)
+# Access via "http://localhost"
+#   (or "http://$(docker-machine) ip)" if using docker-machine)
 services:
   mediawiki:
     depends_on:
@@ -25,7 +25,6 @@ services:
     volumes:
       - type: bind
         source: ${CONTEXT_DIRECTORY}/image_backups
-        # target: /var/www/html/images
         target: /image_backups
         read_only: false
       - type: bind
@@ -35,7 +34,6 @@ services:
       
   database:
     image: sca-rules-db:latest
-    # image: mysql:8.4.0
     environment:
       - DB_NAME=mediawiki
       - MYSQL_USER=mediawiki

@@ -18,7 +18,9 @@ RUN apt-get --quiet update \
     apt-get clean ; rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html/extensions
-RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
+
+RUN git clone https://github.com/MoratNZ/MakePdfBook.git \
+    && git clone https://github.com/DavisNT/ExternalRedirect.git 
 
 COPY --chmod=744 \
   ./bin/backup_images.sh \

@@ -14,16 +14,14 @@ RUN apt-get clean
 WORKDIR /var/www/html/extensions
 RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
 
-COPY ./bin/restore_images.sh /scripts/
-RUN chmod 744 /scripts/restore_images.sh
-COPY ./bin/backup_images.sh /scripts/
-RUN chmod 744 /scripts/backup_images.sh
-COPY ./bin/tidy_backups.sh /scripts/
-RUN chmod 744 /scripts/tidy_backups.sh
-COPY ./bin/startup.sh /scripts/
-RUN chmod 744 /scripts/startup.sh
-COPY /bin/crontab /etc/crontab
-RUN chmod 600 /etc/crontab
+COPY --chmod 744 \
+  ./bin/backup_images.sh \
+  ./bin/restore_images.sh \
+  ./bin/startup.sh \
+  ./bin/tidy_backups.sh \
+  /scripts/
+  
+COPY --chmod 600 /bin/crontab /etc/crontab
 
 
 

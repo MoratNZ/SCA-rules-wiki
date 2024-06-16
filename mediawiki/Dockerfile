@@ -18,14 +18,14 @@ RUN apt-get clean
 WORKDIR /var/www/html/extensions
 RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
 
-COPY --chmod 744 \
+COPY --chmod=744 \
   ./bin/backup_images.sh \
   ./bin/restore_images.sh \
   ./bin/startup.sh \
   ./bin/tidy_backups.sh \
   /scripts/
   
-COPY --chmod 600 /bin/crontab /etc/crontab
+COPY --chmod=600 /bin/crontab /etc/crontab
 
 
 

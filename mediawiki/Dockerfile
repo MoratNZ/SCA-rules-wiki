@@ -1,12 +1,14 @@
 FROM mediawiki:1.41
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # We need pandoc for html > tex > pdf conversion in MakePdfBook
-RUN apt-get --assume-yes install pandoc
-RUN apt-get --assume-yes install texlive-latex-base 
-RUN apt-get --assume-yes install texlive-latex-extra
-RUN apt-get --assume-yes install texlive-fonts-recommended
-RUN apt-get --assume-yes install texlive-fonts-extra
-RUN apt-get --assume-yes install cron
+RUN apt-get --assume-yes --no-install-recommends install pandoc
+RUN apt-get --assume-yes --no-install-recommends install texlive-latex-base 
+RUN apt-get --assume-yes --no-install-recommends install texlive-latex-extra
+RUN apt-get --assume-yes --no-install-recommends install texlive-fonts-recommended
+RUN apt-get --assume-yes --no-install-recommends install texlive-fonts-extra
+RUN apt-get --assume-yes --no-install-recommends install cron
 RUN apt-get clean
 
 WORKDIR /var/www/html/extensions

@@ -1,3 +1,7 @@
+# For reference the trail of images goes:
+# debian:bookworm-slim used by php:8.1-apache
+# php:8.1-apache used by mediawiki:1.4.1
+# mediawiki:1.4.1 is used here.
 FROM mediawiki:1.41
 
 ENV DEBIAN_FRONTEND noninteractive

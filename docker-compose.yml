@@ -24,7 +24,7 @@ services:
       - 80:80
     volumes:
       - type: bind
-        source: ${CONTEXT_DIRECTORY}/images
+        source: ${CONTEXT_DIRECTORY}/image_backups
         # target: /var/www/html/images
         target: /image_backups
         read_only: false

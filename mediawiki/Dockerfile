@@ -10,6 +10,9 @@ RUN apt-get --assume-yes install texlive-fonts-extra
 RUN apt-get --assume-yes install cron
 RUN apt-get clean
 
+WORKDIR /var/www/html/extensions
+RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
+
 COPY ./bin/restore_images.sh /scripts/
 RUN chmod 744 /scripts/restore_images.sh
 COPY ./bin/backup_images.sh /scripts/
@@ -21,8 +24,7 @@ RUN chmod 744 /scripts/startup.sh
 COPY /bin/crontab /etc/crontab
 RUN chmod 600 /etc/crontab
 
-WORKDIR /var/www/html/extensions
-RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
+
 
 WORKDIR /var/www/html
 

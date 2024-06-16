@@ -1,7 +1,9 @@
 name: Create and publish sca-rules-wiki image
 
 on:
+  # A manual trigger
   workflow_dispatch:
+  # Files in mediawiki/ are changed by push or PR
   push:
     branches: ["main"]
     paths:

@@ -5,11 +5,8 @@ on:
   workflow_dispatch:
   # Files in database/ are changed by push or PR
   push:
-    branches: ["main"]
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
-  pull_request:
-    branches: ["main"]
 
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
@@ -36,6 +33,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Exit if not on master branch
+        if: endsWith(github.ref, 'main') == false
+        run: exit -1
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1

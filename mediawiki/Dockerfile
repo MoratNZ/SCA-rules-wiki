@@ -4,11 +4,11 @@
 # mediawiki:1.4.1 is used here.
 FROM mediawiki:1.41
 
-ENV DEBIAN_FRONTEND noninteractive
-
 # We need pandoc for html > tex > pdf conversion in MakePdfBook
 # For the sake of sanity, keep the list of packages sorted.
-RUN apt-get -y update && apt-get --assume-yes --no-install-recommends install \
+RUN apt-get -y update \
+    && DEBIAN_FRONTEND noninteractive \
+    apt-get --assume-yes --no-install-recommends install \
     cron \
     texlive-fonts-extra \
     texlive-fonts-recommended \

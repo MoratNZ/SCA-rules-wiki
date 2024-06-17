@@ -1,3 +1,3 @@
 .env
-context/db_backups/archive/*
-prod/context/db_backups/archive/*
+dev_environment/context/db_backups/archive/*
+dev_environment/context/image_backups/archive/*

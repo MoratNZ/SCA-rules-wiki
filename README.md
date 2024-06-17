@@ -13,10 +13,15 @@ If you don't already have it
 
 ### Create a context directory (optional)
 This is a dir to persist database dumps and image files.
-There is a basic / example context dir included in this repository (```context/```). It provides a minimum wiki setup.
+There is a basic / example context dir included in this repository (```dev_environment/context/```). It provides a minimum wiki setup.
 This isn't intended to significant use - just for familiarisation. 
 If you're going to be actually running this, copy context/ to a location outside the repository. 
 **Advanced note:** it's also possible to bootstrap the DB content from scratch. Details below
+
+### Using the sample dev environment
+
+#### Go into the dev_environment directory
+`cd dev_environment`
 
 ### Create a .env file
 ```cp example.env .env```
@@ -31,7 +36,7 @@ Go to ```http://localhost``` from your preferred web browser
 Log in; the default user name is ```Admin```, password ```Admin``` (you'll get prompted to change this to a password that sucks less on first login)
 
 ## Required container environment
-For the containers to stand up correctly, they need the following environment (all of this is provided by the included `docker-compose.yml`, its associated `.env` file, and this repo's `context/` directory - this is for documentation purposes):
+For the containers to stand up correctly, they need the following environment (all of this is provided in the `dev_environment/` directory with the included `docker-compose.yml`, its associated `.env` file, and this repo's `context/` directory - this is for documentation purposes):
 - sca-rules-wiki
   - Environment variables set on container:
       - SITE_NAME

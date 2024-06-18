@@ -1,7 +1,5 @@
 #!/bin/bash
-#
-# 
-#
+
 PROGRAM_NAME=$0
 
 function usage {

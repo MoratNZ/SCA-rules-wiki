@@ -31,6 +31,10 @@ services:
         source: ${CONTEXT_DIRECTORY}/LocalSettings.php
         target: /var/www/html/LocalSettings.php
         read_only: true
+      - type: bind
+        source: ../mediawiki/bin
+        target: /scripts
+        read_only: false
       
   database:
     image: sca-rules-db:latest
@@ -51,4 +55,8 @@ services:
       - type: bind
         source: ${CONTEXT_DIRECTORY}/db_backups
         target: /db_backups
+        read_only: false
+      - type: bind
+        source: ../database/bin
+        target: /scripts
         read_only: false

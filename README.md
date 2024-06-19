@@ -30,6 +30,8 @@ Edit ```.env``` in your favourite editor, and make any tweaks to it that you pre
 ### Start the containers
 ```docker compose up```
 
+**Note:** The included docker-compose file overrides the scripts directory in the containers with the local `mediawiki/bin` and `database/bin` directories. So you can edit these files and see the effects of your changes immediately in your running containers (without needing to rebuild the containers).
+
 ### Access the wiki
 Go to ```http://localhost``` from your preferred web browser
 

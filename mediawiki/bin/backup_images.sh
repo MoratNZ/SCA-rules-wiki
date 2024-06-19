@@ -37,15 +37,58 @@ BACKUP_AGE=`/usr/bin/find $BACKUPS_LOCATION/latest.tar.gz -type f -printf '%T@'`
 # Check when the latest change was made to images/
 NEWEST_FILE=`/usr/bin/find /var/www/html/images -type f -printf '%T@\n'| sort -n | tail -n 1`
 
+CHANGED=`/usr/bin/echo $NEWEST_FILE $BACKUP_AGE | awk '{if ($1 > $2) print 1; else print 0}'`
+
+# Check the current file count with the file count when the last backup was taken
+#
+# (This is to catch file deletions, which won't show up in the above check of 
+# last updated times for files and directories, since that only checks times
+# for objects that currently exist)
+
+CURRENT_FILE_COUNT=`find /var/www/html/images  -type f | wc -l`
+OLD_FILE_COUNT=`cat $BACKUPS_LOCATION/FILECOUNT`
+
+if [ $CURRENT_FILE_COUNT -ne $OLD_FILE_COUNT ]; then
+    FILECOUNT_CHANGED=1
+else    
+    FILECOUNT_CHANGED=0
+fi
+
 # if there are new changes, tar up the images folder into the archives
 FILENAME=$(/usr/bin/date +"%Y%m%d%H%M")_images.tar.gz
-if $FORCE|| $NEWEST_FILE -gt $BACKUP_AGE
+
+if $FORCE || 
+    { 
+    [ $CHANGED = 1 ] || 
+    [ $FILECOUNT_CHANGED = 1 ]
+    }
+then
+    if $FORCE; then
+        EXPLANATION="images/ backup forced"
+    else
+        A="last updated date in images/ is newer than last backup"
+        B="the filecount in images/ has changed from the last backup"
+
+        if [ $CHANGED = 1 ]; then 
+            EXPLANATION=$A
+        fi
+        if [ $FILECOUNT_CHANGED = 1 ]; then
+            if [ $CHANGED = 1 ]; then 
+                EXPLANATION="$A and $B"
+            else
+                EXPLANATION=$B
+            fi
+        fi
+    fi
+    /usr/bin/echo "$( /usr/bin/date ) - images.sh run: $EXPLANATION; saving backup"
     # create the archive dir if it doesn't exist.
-    if [ ! -d $BACKUPS_LOCATION/archive ]
-        then
+    if [ ! -d $BACKUPS_LOCATION/archive ]; then
         /usr/bin/mkdir -p $BACKUPS_LOCATION/archive
     fi
-    /usr/bin/tar -czvf $BACKUPS_LOCATION/archive/$FILENAME /var/www/html/images 
+    find /var/www/html/images  -type f | wc -l > $BACKUPS_LOCATION/FILECOUNT
+    /usr/bin/tar -C /var/www/html -czvf $BACKUPS_LOCATION/archive/$FILENAME images > /dev/null
     # copy
     /usr/bin/cp $BACKUPS_LOCATION/archive/$FILENAME $BACKUPS_LOCATION/latest.tar.gz
+else
+    /usr/bin/echo "$( /usr/bin/date ) - backup_image.sh run: No change to images/"
 fi

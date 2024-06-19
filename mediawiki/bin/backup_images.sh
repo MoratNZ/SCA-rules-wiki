@@ -15,19 +15,24 @@ environment variable (in the current environment this is set to
 
 "
     echo "  -f      Force a backup, even if there have been no changes to the database"
-    echo "  -h      display help"
+    echo "  -h      Display help"
+    echo "  -v      Verbose output"
     exit 1
 }
 
 FORCE=false
+VERBOSE=false
 # Process command line flags
-while getopts 'fh' OPTION; do
+while getopts 'fhv' OPTION; do
     case "$OPTION" in
         f) 
             FORCE=true
             ;;
         h)
             usage
+            ;;
+        v) 
+            VERBOSE=true
             ;;
     esac
 done
@@ -85,8 +90,15 @@ then
     if [ ! -d $BACKUPS_LOCATION/archive ]; then
         /usr/bin/mkdir -p $BACKUPS_LOCATION/archive
     fi
+    
     find /var/www/html/images  -type f | wc -l > $BACKUPS_LOCATION/FILECOUNT
-    /usr/bin/tar -C /var/www/html -czvf $BACKUPS_LOCATION/archive/$FILENAME images > /dev/null
+
+    if $VERBOSE; then
+        echo "Storing following files:"
+        /usr/bin/tar -C /var/www/html -czvf $BACKUPS_LOCATION/archive/$FILENAME images
+    else
+        /usr/bin/tar -C /var/www/html -czvf $BACKUPS_LOCATION/archive/$FILENAME images > /dev/null
+    fi
     # copy
     /usr/bin/cp $BACKUPS_LOCATION/archive/$FILENAME $BACKUPS_LOCATION/latest.tar.gz
 else

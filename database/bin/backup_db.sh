@@ -50,7 +50,11 @@ fi
 CHANGED=$?
 
 if $FORCE || [ $CHANGED = 1 ]; then 
-    /usr/bin/echo "$( date ) - backup_db.sh run: Database changed; saving backup"
+    if $FORCE; then
+        /usr/bin/echo "$( /usr/bin/date ) - backup_db.sh run: Database backup forced; saving backup"
+    else
+        /usr/bin/echo "$( /usr/bin/date ) - backup_db.sh run: Database changed; saving backup"
+    fi
     ARCHIVE_FILENAME=$(date +"%Y%m%d%H%M")_mediawiki.sql
     /usr/bin/cp $BACKUPS_LOCATION/candidate.sql $BACKUPS_LOCATION/archive/$ARCHIVE_FILENAME
     /usr/bin/cp $BACKUPS_LOCATION/candidate.sql $BACKUPS_LOCATION/latest.sql

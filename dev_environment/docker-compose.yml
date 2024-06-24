@@ -7,7 +7,7 @@ services:
       database:
         condition: service_healthy
         restart: true
-    image: sca-rules-wiki:latest
+    image: sca-rules-wiki:dev
     environment:
       - SITE_NAME=${SITE_NAME}
       - BASE_URL=${BASE_URL}
@@ -37,7 +37,7 @@ services:
         read_only: false
       
   database:
-    image: sca-rules-db:latest
+    image: sca-rules-db:dev
     environment:
       - DB_NAME=mediawiki
       - MYSQL_USER=mediawiki

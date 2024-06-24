@@ -11,7 +11,7 @@ RUN apt-get --assume-yes install cron
 RUN apt-get clean
 
 WORKDIR /var/www/html/extensions
-RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git clone https://github.com/DavisNT/ExternalRedirect.git 
+RUN git clone https://github.com/MoratNZ/MakePdfBook.git && git -C MakePdfBook checkout v2.0.0 
 
 COPY ./bin/restore_images.sh /scripts/
 RUN chmod 744 /scripts/restore_images.sh

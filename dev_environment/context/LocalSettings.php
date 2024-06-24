@@ -9,7 +9,7 @@
 # DB_UPGRADE_KEY
 
 # Protect against web entry
-if ( !defined( 'MEDIAWIKI' ) ) {
+if (!defined('MEDIAWIKI')) {
 	exit;
 }
 
@@ -111,38 +111,26 @@ $wgRightsIcon = "";
 # Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "/usr/bin/diff3";
 
-
-
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
 $wgDefaultSkin = "vector";
 
 # Enabled skins.
-
-wfLoadSkin( 'MonoBook' );
-wfLoadSkin( 'Vector' );
-
+wfLoadSkin('Vector');
 
 # Enabled extensions. Most of the extensions are enabled by adding
 # wfLoadExtensions('ExtensionName');
-wfLoadExtension( 'PdfHandler' );
-wfLoadExtension( 'MakePdfBook' );
-#wfLoadExtension( 'NativeSvgHandler' );
-wfLoadExtension( 'VisualEditor' );
-wfLoadExtension( 'WikiEditor' );
-wfLoadExtension( 'TemplateData' );
-
-require_once("$IP/extensions/ExternalRedirect/ExternalRedirect.php");
-$wgExternalRedirectNsIDs = array(1000, 1002, 1004, 1006, 1008, 1010, 1012);
-
+wfLoadExtension('PdfHandler');
+wfLoadExtension('MakePdfBook');
+wfLoadExtension('VisualEditor');
+wfLoadExtension('WikiEditor');
+wfLoadExtension('TemplateData');
 
 # Allow uploading of SVGs and render them correctly
 $wgFileExtensions[] = 'svg';
 $wgAllowTitlesInSVG = true;
 $wgSVGNativeRendering = true;
 
-#$wgSVGConverter = 'inkscape';
-#$wgSVGConverterPath = '/usr/bin';
 $wgTmpDirectory = '/tmp';
 $wgMaxShellMemory = '1024000';  #required to get the conversion to run
 
@@ -159,50 +147,50 @@ $wgAllowDisplayTitle = true;
 $wgRestrictDisplayTitle = false;
 
 # Additional namespace definitions
-define("NS_ARCHERY",1000);
-define("NS_ARCHERY_NOTES",1001);
+define("NS_ARCHERY", 1000);
+define("NS_ARCHERY_NOTES", 1001);
 $wgExtraNamespaces[NS_ARCHERY] = "Archery";
 $wgExtraNamespaces[NS_ARCHERY_NOTES] = "Archery_notes";
 $wgContentNamespaces[] = NS_ARCHERY;
 $wgNamespaceProtection[NS_ARCHERY] = array('editArchery');
 
-define("NS_ARMORED_COMBAT",1002);
-define("NS_ARMORED_COMBAT_NOTES",1003);
+define("NS_ARMORED_COMBAT", 1002);
+define("NS_ARMORED_COMBAT_NOTES", 1003);
 $wgExtraNamespaces[NS_ARMORED_COMBAT] = "Armored_Combat";
 $wgExtraNamespaces[NS_ARMORED_COMBAT_NOTES] = "Armored_Combat_notes";
 $wgContentNamespaces[] = NS_ARMORED_COMBAT;
 $wgNamespaceProtection[NS_ARMORED_COMBAT] = array('editArmoredCombat');
 
-define("NS_EQUESTRIAN",1004);
-define("NS_EQUESTRIAN_NOTES",1005);
+define("NS_EQUESTRIAN", 1004);
+define("NS_EQUESTRIAN_NOTES", 1005);
 $wgExtraNamespaces[NS_EQUESTRIAN] = "Equestrian";
 $wgExtraNamespaces[NS_EQUESTRIAN_NOTES] = "Equestrian_notes";
 $wgContentNamespaces[] = NS_EQUESTRIAN;
 $wgNamespaceProtection[NS_EQUESTRIAN] = array('editEquestrian');
 
-define("NS_FENCING",1006);
-define("NS_FENCING_NOTES",1007);
+define("NS_FENCING", 1006);
+define("NS_FENCING_NOTES", 1007);
 $wgExtraNamespaces[NS_FENCING] = "Fencing";
 $wgExtraNamespaces[NS_FENCING_NOTES] = "Fencing_notes";
 $wgContentNamespaces[] = NS_FENCING;
 $wgNamespaceProtection[NS_FENCING] = array('editFencing');
 
-define("NS_SIEGE",1008);
-define("NS_SIEGE_NOTES",1009);
+define("NS_SIEGE", 1008);
+define("NS_SIEGE_NOTES", 1009);
 $wgExtraNamespaces[NS_SIEGE] = "Siege";
 $wgExtraNamespaces[NS_SIEGE_NOTES] = "Siege_notes";
 $wgContentNamespaces[] = NS_SIEGE;
 $wgNamespaceProtection[NS_SIEGE] = array('editSiege');
 
-define("NS_THROWN_WEAPONS",1010);
-define("NS_THROWN_WEAPONS_NOTES",1011);
+define("NS_THROWN_WEAPONS", 1010);
+define("NS_THROWN_WEAPONS_NOTES", 1011);
 $wgExtraNamespaces[NS_THROWN_WEAPONS] = "Thrown_Weapons";
 $wgExtraNamespaces[NS_THROWN_WEAPONS_NOTES] = "Thrown_Weapons_notes";
 $wgContentNamespaces[] = NS_THROWN_WEAPONS;
 $wgNamespaceProtection[NS_THROWN_WEAPONS] = array('editThrownWeapons');
 
-define("NS_YOUTH_MARTIAL",1012);
-define("NS_YOUTH_MARTIAL_NOTES",1013);
+define("NS_YOUTH_MARTIAL", 1012);
+define("NS_YOUTH_MARTIAL_NOTES", 1013);
 $wgExtraNamespaces[NS_YOUTH_MARTIAL] = "Youth_Martial";
 $wgExtraNamespaces[NS_YOUTH_MARTIAL_NOTES] = "Youth_Martial_notes";
 $wgContentNamespaces[] = NS_YOUTH_MARTIAL;

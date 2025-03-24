@@ -1,20 +1,14 @@
 FROM mysql:8.0-debian
 
 RUN apt-get update
-RUN apt-get --assume-yes install cron
-RUN apt-get --assume-yes install vim
 RUN apt-get clean
 
 COPY ./bin/restore_db.sh /scripts/
 RUN chmod 744 /scripts/restore_db.sh
 COPY ./bin/backup_db.sh /scripts/
 RUN chmod 744 /scripts/backup_db.sh
-COPY ./bin/tidy_backups.sh /scripts/
-RUN chmod 744 /scripts/tidy_backups.sh
 COPY ./bin/startup.sh /scripts/
 RUN chmod 744 /scripts/startup.sh
-COPY /bin/crontab /etc/crontab
-RUN chmod 600 /etc/crontab
 COPY ./bin/bootstrap.sh /docker-entrypoint-initdb.d/
 RUN chmod 744 /docker-entrypoint-initdb.d/bootstrap.sh
 # This stanza is a hack to allow us to call the elaborate mysqld entrypoint

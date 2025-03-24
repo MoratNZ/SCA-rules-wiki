@@ -21,8 +21,7 @@ COPY ./bin/tidy_backups.sh /scripts/
 RUN chmod 744 /scripts/tidy_backups.sh
 COPY ./bin/startup.sh /scripts/
 RUN chmod 744 /scripts/startup.sh
-COPY /bin/crontab /etc/crontab
-RUN chmod 600 /etc/crontab
+
 
 WORKDIR /var/www/html
 

@@ -7,7 +7,6 @@ RUN apt-get --assume-yes install texlive-latex-base
 RUN apt-get --assume-yes install texlive-latex-extra
 RUN apt-get --assume-yes install texlive-fonts-recommended
 RUN apt-get --assume-yes install texlive-fonts-extra
-RUN apt-get --assume-yes install cron
 RUN apt-get clean
 
 WORKDIR /var/www/html/extensions

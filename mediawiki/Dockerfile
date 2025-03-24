@@ -16,8 +16,6 @@ COPY ./bin/restore_images.sh /scripts/
 RUN chmod 744 /scripts/restore_images.sh
 COPY ./bin/backup_images.sh /scripts/
 RUN chmod 744 /scripts/backup_images.sh
-COPY ./bin/tidy_backups.sh /scripts/
-RUN chmod 744 /scripts/tidy_backups.sh
 COPY ./bin/startup.sh /scripts/
 RUN chmod 744 /scripts/startup.sh
 

@@ -6,10 +6,10 @@ A containerised solution for deploying a MediaWiki instance customised for SCA c
 If you don't already have it
 
 ### Create mediawiki container image
-```docker build -t sca-rules-wiki:latest mediawiki/```
+```docker build -t sca-rules-wiki:dev mediawiki/```
 
 ### Create mysql container image
-```docker build -t sca-rules-db:latest database/```
+```docker build -t sca-rules-db:dev database/```
 
 ### Create a context directory (optional)
 This is a dir to persist database dumps and image files.

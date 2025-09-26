@@ -13,6 +13,9 @@ if (!defined('MEDIAWIKI')) {
 	exit;
 }
 
+# Set this as a draft wiki (enables watermarking of pdf output etc)
+$makepdfIsDraft = true;
+
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
@@ -31,10 +34,6 @@ $wgServer = getenv("BASE_URL");
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
-
-## The URL path to the logo.  Make sure you change this from the default,
-## or else you'll overwrite your logo when you upgrade!
-#$wgLogo = "http://lochac.sca.org/lochac/pics/Lochac304.gif";
 
 ## UPO means: this is also a user preference option
 
@@ -67,7 +66,6 @@ $wgDBmysql5 = false;
 ## Shared memory settings
 $wgMainCacheType = CACHE_NONE;
 $wgMemCachedServers = [];
-
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
@@ -111,12 +109,15 @@ $wgRightsIcon = "";
 # Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "/usr/bin/diff3";
 
+
+
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
 $wgDefaultSkin = "vector";
 
 # Enabled skins.
 wfLoadSkin('Vector');
+
 
 # Enabled extensions. Most of the extensions are enabled by adding
 # wfLoadExtensions('ExtensionName');
@@ -125,17 +126,20 @@ wfLoadExtension('MakePdfBook');
 wfLoadExtension('VisualEditor');
 wfLoadExtension('WikiEditor');
 wfLoadExtension('TemplateData');
+wfLoadExtension('ParserFunctions');
+#wfLoadExtension('LabeledSectionTransclusion');
 
-# Allow uploading of SVGs and render them correctly
-$wgFileExtensions[] = 'svg';
+# Allow uploading of PDFs and SVGs
+$wgFileExtensions = array_merge(
+    $wgFileExtensions, [
+	    'pdf', 'svg'
+    ]
+);	
+# Render SVGs correctly  them correctly
 $wgAllowTitlesInSVG = true;
 $wgSVGNativeRendering = true;
 
-$wgTmpDirectory = '/tmp';
-$wgMaxShellMemory = '1024000';  #required to get the conversion to run
 
-# End of automatically generated settings.
-# Add more configuration options below.
 
 # Debian specific generated settings
 # Use system mimetypes
@@ -146,81 +150,161 @@ $wgMimeTypeFile = '/etc/mime.types';
 $wgAllowDisplayTitle = true;
 $wgRestrictDisplayTitle = false;
 
-# Additional namespace definitions
-define("NS_ARCHERY", 1000);
-define("NS_ARCHERY_NOTES", 1001);
-$wgExtraNamespaces[NS_ARCHERY] = "Archery";
-$wgExtraNamespaces[NS_ARCHERY_NOTES] = "Archery_notes";
-$wgContentNamespaces[] = NS_ARCHERY;
-$wgNamespaceProtection[NS_ARCHERY] = array('editArchery');
 
-define("NS_ARMORED_COMBAT", 1002);
-define("NS_ARMORED_COMBAT_NOTES", 1003);
-$wgExtraNamespaces[NS_ARMORED_COMBAT] = "Armored_Combat";
-$wgExtraNamespaces[NS_ARMORED_COMBAT_NOTES] = "Armored_Combat_notes";
-$wgContentNamespaces[] = NS_ARMORED_COMBAT;
-$wgNamespaceProtection[NS_ARMORED_COMBAT] = array('editArmoredCombat');
+$handbookNamespaces = [
+	"Global" => 550,
+	"Archery" => 1000,
+	"Armored_Combat" => 1002, 
+	"Equestrian" => 1004, 
+	"Rapier" => 1006,
+	"Siege" => 1008, 
+	"Thrown_Weapons" => 1010, 
+	"Youth_Martial" => 1012, 
+	"Armored_Steel_Combat" => 1014, 
+	"Cut_And_Thrust" => 1016, 
+	"Harnischfechten" => 1018, 
+];
 
-define("NS_EQUESTRIAN", 1004);
-define("NS_EQUESTRIAN_NOTES", 1005);
-$wgExtraNamespaces[NS_EQUESTRIAN] = "Equestrian";
-$wgExtraNamespaces[NS_EQUESTRIAN_NOTES] = "Equestrian_notes";
-$wgContentNamespaces[] = NS_EQUESTRIAN;
-$wgNamespaceProtection[NS_EQUESTRIAN] = array('editEquestrian');
-
-define("NS_FENCING", 1006);
-define("NS_FENCING_NOTES", 1007);
-$wgExtraNamespaces[NS_FENCING] = "Fencing";
-$wgExtraNamespaces[NS_FENCING_NOTES] = "Fencing_notes";
-$wgContentNamespaces[] = NS_FENCING;
-$wgNamespaceProtection[NS_FENCING] = array('editFencing');
-
-define("NS_SIEGE", 1008);
-define("NS_SIEGE_NOTES", 1009);
-$wgExtraNamespaces[NS_SIEGE] = "Siege";
-$wgExtraNamespaces[NS_SIEGE_NOTES] = "Siege_notes";
-$wgContentNamespaces[] = NS_SIEGE;
-$wgNamespaceProtection[NS_SIEGE] = array('editSiege');
-
-define("NS_THROWN_WEAPONS", 1010);
-define("NS_THROWN_WEAPONS_NOTES", 1011);
-$wgExtraNamespaces[NS_THROWN_WEAPONS] = "Thrown_Weapons";
-$wgExtraNamespaces[NS_THROWN_WEAPONS_NOTES] = "Thrown_Weapons_notes";
-$wgContentNamespaces[] = NS_THROWN_WEAPONS;
-$wgNamespaceProtection[NS_THROWN_WEAPONS] = array('editThrownWeapons');
-
-define("NS_YOUTH_MARTIAL", 1012);
-define("NS_YOUTH_MARTIAL_NOTES", 1013);
-$wgExtraNamespaces[NS_YOUTH_MARTIAL] = "Youth_Martial";
-$wgExtraNamespaces[NS_YOUTH_MARTIAL_NOTES] = "Youth_Martial_notes";
-$wgContentNamespaces[] = NS_YOUTH_MARTIAL;
-$wgNamespaceProtection[NS_YOUTH_MARTIAL] = array('editYouthMartial');
+$kingdoms = [
+	'Model' => 100,
+	'Aethelmearc' => 200, 
+	'An_Tir' => 300, 
+	'Ansteorra' => 400,
+	'Artemisia' => 500,
+    'Atenveldt' => 600,
+    'Atlantia' => 700,
+    'Avacal' => 800,
+    'Caid' => 900,
+    'Calontir' => 1000,
+    # 'Drachenwald'  deliberately omitted
+    'Ealdormere' => 1100,
+    'East_Kingdom' => 1200,
+    'Gleann_Abhann' => 1300,
+    # 'Lochac   ' deliberately omitted
+    'Meridies' => 1400,
+    'Midrealm' => 1500,
+    'Northshield' => 1600,
+    'Outlands' => 1700,
+    'Trimaris' => 1800,
+    'West_Kingdom' => 1900,
+];
 
 # User permission settings
 # General users can read, but can't edit
 # They also can't create their own accounts
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
+$wgGroupPermissions['*']['read'] = false;
+$wgGroupPermissions['*']['delete'] = false;
+$wgGroupPermissions['*']['createpage'] = false;
 
 # Logged in users can edit the general namespace
 $wgGroupPermissions['user']['read'] = true;
 $wgGroupPermissions['user']['edit'] = false;
+$wgGroupPermissions['user']['delete'] = false;
 $wgGroupPermissions['user']['changetags'] = false;
 $wgGroupPermissions['user']['applychangetags'] = false;
-$wgGroupPermissions['user']['applychangetags'] = false;
+$wgGroupPermissions['user']['createpage'] = false;
 
-$wgGroupPermissions['editor'] = $wgGroupPermissions['user'];
-$wgGroupPermissions['editor']['edit'] = true;
-$wgGroupPermissions['editor']['changetags'] = true;
-$wgGroupPermissions['editor']['applychangetags'] = true;
-$wgGroupPermissions['editor']['applychangetags'] = true;
+$wgGroupPermissions['Editor'] = $wgGroupPermissions['user'];
+$wgGroupPermissions['Editor']['createpage'] = true;
+$wgGroupPermissions['Editor']['delete'] = true;
+$wgGroupPermissions['Editor']['edit'] = true;
+$wgGroupPermissions['Editor']['changetags'] = true;
+$wgGroupPermissions['Editor']['applychangetags'] = true;
+
+$wgGroupPermissions['SocietyMarshal'] = $wgGroupPermissions['Editor'];
+
+# Create society namespaces
+foreach ( $handbookNamespaces as $ns => $index ){
+	$ns_name = $ns;
+	$ns_index = $index;
+	$ns_perms = sprintf("edit%s", str_replace("_", "", $ns_name ));
+
+	$society_deputy_role = sprintf("Society%sEditor",str_replace("_", "", $ns_name));
+
+	$notes = sprintf("%s_notes", $ns_name );
+	$notes_index = $ns_index + 1;
+
+	$wgExtraNamespaces[$ns_index] = $ns_name;
+	$wgExtraNamespaces[$notes_index] = $notes;
+	$wgContentNamespaces[] = $ns_index;
+	$wgNamespacesToBeSearchedDefault[$ns_index] = true;
+	$wgNamespaceProtection[$ns_index] = array($ns_perms);
+
+	$wgGroupPermissions['SocietyMarshal'][$ns_perms] = true;
+
+	$wgGroupPermissions[$society_deputy_role] = $wgGroupPermissions['Editor'];
+	$wgGroupPermissions[$society_deputy_role][$ns_perms] = true;
+}
+
+# Create kingdom namespaces
+foreach( $kingdoms as $kingdom_name => $index_offset){
+	$kingdom_earl_marshal_role = sprintf("%sEarlMarshal", str_replace("_", "", $kingdom_name));
+
+	foreach ( $handbookNamespaces as $ns => $ns_index ){
+		if($ns === "Global"){
+			if($kingdom_name !== "Society"){
+				continue;
+			}
+		}
+		$ns_name = $ns;
+		$kingdom_name_nospaces = str_replace("_","",$kingdom_name);
+		$ns_name_nospaces = str_replace("_","",$ns_name);
+
+		$society_deputy_role = sprintf("Society%sEditor", $ns_name_nospaces);
+
+		$ns_perms = sprintf("edit%s%s", $kingdom_name_nospaces, $ns_name_nospaces);
+		$ns_editor = sprintf("%s%sEditor", $kingdom_name_nospaces, $ns_name_nospaces);
+		$ns_index = $ns_index + $index_offset;
+		
+		$notes_name = sprintf("%s_notes", $ns_name);
+		$notes_index = $ns_index + 1;
+
+		$wgExtraNamespaces[$ns_index] = sprintf("%s_%s",$kingdom_name,$ns_name);
+		$wgExtraNamespaces[$notes_index] = sprintf("%s_%s", $kingdom_name, $notes_name);
+		$wgContentNamespaces[] = $ns_index;
+
+		$wgNamespaceProtection[$ns_index] = array($ns_perms);
+
+		if($kingdom_name === "Model"){
+			$wgGroupPermissions[$society_deputy_role][$ns_perms] = true;
+			$wgGroupPermissions['SocietyMarshal'][$ns_perms] = true;
+		}  else {
+			$wgGroupPermissions[$ns_editor] = $wgGroupPermissions['Editor'];
+			$wgGroupPermissions[$ns_editor][$ns_perms] = true;
+			$wgGroupPermissions[$society_deputy_role][$ns_perms] = true;
+			$wgGroupPermissions[$kingdom_earl_marshal_role][$ns_perms] = true;
+			$wgGroupPermissions['SocietyMarshal'][$ns_perms] = true;
+		}
+	}
+}
+
+// # Additional namespace definitions
+// define("NS_GLOBAL", 550);
+// define("NS_GLOBAL_NOTES", 551);
+// $wgExtraNamespaces[NS_GLOBAL] = "Global";
+// $wgExtraNamespaces[NS_GLOBAL_NOTES] = "Global_notes";
+// $wgContentNamespaces[] = NS_GLOBAL;
+// $wgNamespaceProtection[NS_GLOBAL] = array('editGlobal');
+// $wgGroupPermissions['SiegeEditor']['editSiege'] = true;
+
+
+
+
 
 # Namespaces can be editted by their specific editors
+$wgGroupPermissions['GlobalEditor']['editGlobal'] = true;
 $wgGroupPermissions['ArcheryEditor']['editArchery'] = true;
 $wgGroupPermissions['ArmoredCombatEditor']['editArmoredCombat'] = true;
 $wgGroupPermissions['EquestrianEditor']['editEquestrian'] = true;
-$wgGroupPermissions['FencingEditor']['editFencing'] = true;
+$wgGroupPermissions['RapierEditor']['editRapier'] = true;
+$wgGroupPermissions['RapierEditor']['editCutAndThrust'] = true;
 $wgGroupPermissions['SiegeEditor']['editSiege'] = true;
 $wgGroupPermissions['ThrownWeaponsEditor']['editThrownWeapons'] = true;
 $wgGroupPermissions['YouthMartialEditor']['editYouthMartial'] = true;
+$wgGroupPermissions['ArmoredSteelCombatEditor']['editArmoredSteelCombat'] = true;
+$wgGroupPermissions['HarnischfechtenEditor']['editHarnischfechten'] = true;
 
+$wgShowExceptionDetails = true;
+$wgDebugDumpSql = true;

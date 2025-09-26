@@ -21,7 +21,7 @@ services:
       - BACKUPS_LOCATION=/image_backups
     restart: always
     ports:
-      - 80:80
+      - 8380:80
     volumes:
       - type: bind
         source: ${CONTEXT_DIRECTORY}/image_backups
@@ -34,6 +34,10 @@ services:
       - type: bind
         source: ../mediawiki/bin
         target: /scripts
+        read_only: false
+      - type: bind
+        source: ../../MakePdfBook
+        target: /var/www/html/extensions/MakePdfBook
         read_only: false
       
   database:

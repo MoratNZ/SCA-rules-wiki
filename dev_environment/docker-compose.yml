@@ -28,6 +28,10 @@ services:
         target: /image_backups
         read_only: false
       - type: bind
+        source: ${CONTEXT_DIRECTORY}/images
+        target: /var/www/html/images
+        read_only: false
+      - type: bind
         source: ${CONTEXT_DIRECTORY}/LocalSettings.php
         target: /var/www/html/LocalSettings.php
         read_only: true
@@ -39,7 +43,7 @@ services:
         source: ../../MakePdfBook
         target: /var/www/html/extensions/MakePdfBook
         read_only: false
-      
+
   database:
     image: sca-rules-db:dev
     environment:
@@ -59,6 +63,10 @@ services:
       - type: bind
         source: ${CONTEXT_DIRECTORY}/db_backups
         target: /db_backups
+        read_only: false
+      - type: bind
+        source: ${CONTEXT_DIRECTORY}/db_data
+        target: /var/lib/mysql
         read_only: false
       - type: bind
         source: ../database/bin

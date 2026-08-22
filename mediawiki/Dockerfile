@@ -1,14 +1,7 @@
 FROM mediawiki:1.43.3
 
-# we need inkscape for image conversion in MakePdfBook
-# we need pandoc for html > tex > pdf conversion in MakePdfBook
 RUN apt-get update && \
-    apt-get --assume-yes install inkscape && \
-    apt-get --assume-yes install pandoc && \
-    apt-get --assume-yes install texlive-latex-base && \
-    apt-get --assume-yes install texlive-latex-extra && \
-    apt-get --assume-yes install texlive-fonts-recommended && \
-    apt-get --assume-yes install texlive-fonts-extra && \
+    apt-get --assume-yes install weasyprint python3-pypdf python3-lxml fonts-urw-base35 && \
     apt-get clean
 
 WORKDIR /var/www/html/extensions

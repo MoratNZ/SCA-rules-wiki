@@ -1,3 +1,7 @@
 .env
 dev_environment/context/db_backups/archive/*
 dev_environment/context/image_backups/archive/*
+test/*
+# needed to manually unpack images into this dir, we don't want to commit the unpacked ones
+dev_environment/context/images
+dev_environment/context/db_data

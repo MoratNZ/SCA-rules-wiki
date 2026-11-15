@@ -23,9 +23,11 @@ If you're going to be actually running this, copy context/ to a location outside
 #### Go into the dev_environment directory
 `cd dev_environment`
 
-### Create a .env file
-```cp example.env .env```
-Edit ```.env``` in your favourite editor, and make any tweaks to it that you prefer. 
+
+#### Run the setup script
+```./setup.sh```
+
+If you want to adjust any of the default environment variables, edit ```.env```
 
 ### Start the containers
 ```docker compose up```

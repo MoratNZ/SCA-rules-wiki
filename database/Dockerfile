@@ -1,4 +1,4 @@
-FROM mysql:8.0-debian
+FROM  docker.io/library/mysql:8.0-debian
 
 RUN apt-get update
 RUN apt-get clean
